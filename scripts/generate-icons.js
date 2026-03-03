@@ -129,33 +129,28 @@ function buildICO(pngs) {
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────
-const outDir   = path.join(__dirname, '..', 'assets');
+const outDir    = path.join(__dirname, '..', 'assets');
 const sourcePng = path.join(outDir, 'icon-source.png');
 fs.mkdirSync(outDir, { recursive: true });
 
-// Si un PNG personnalisé existe, on l'utilise directement
+// Génère toujours l'ICO multi-résolution depuis le renderer interne
+// (NSIS exige que chaque entrée ICO corresponde exactement à sa taille déclarée)
+console.log('Génération des icônes…');
+const sizes = [256, 48, 32, 16];
+const pngs  = sizes.map(s => { process.stdout.write(`  PNG ${s}x${s}… `); const png = createPNG(s); console.log('OK'); return { png, size: s }; });
+const ico = buildICO(pngs);
+fs.writeFileSync(path.join(outDir, 'icon.ico'), ico);
+console.log('  icon.ico… OK');
+
+// Pour icon.png : utilise le logo personnalisé si présent, sinon le Z généré
 if (fs.existsSync(sourcePng)) {
-  console.log('Logo personnalisé détecté (icon-source.png)…');
-  const png = fs.readFileSync(sourcePng);
-  // Copie comme icon.png
-  fs.writeFileSync(path.join(outDir, 'icon.png'), png);
-  console.log('  icon.png… OK');
-  // Crée l'ICO en embarquant le PNG (PNG-in-ICO, Windows Vista+)
-  const ico = buildICO([{ png, size: 256 }]);
-  fs.writeFileSync(path.join(outDir, 'icon.ico'), ico);
-  console.log('  icon.ico… OK');
-  console.log('\n✅ Icônes générées depuis icon-source.png :');
-  console.log('   assets/icon.png  (' + png.length + ' octets)');
-  console.log('   assets/icon.ico  (' + ico.length + ' octets)');
+  console.log('Logo personnalisé détecté (icon-source.png) → icon.png');
+  fs.copyFileSync(sourcePng, path.join(outDir, 'icon.png'));
 } else {
-  // Génération automatique du Z Zenith
-  console.log('Génération des icônes…');
-  const sizes = [256, 64, 32, 16];
-  const pngs  = sizes.map(s => { process.stdout.write(`  PNG ${s}x${s}… `); const png = createPNG(s); console.log('OK'); return { png, size: s }; });
   fs.writeFileSync(path.join(outDir, 'icon.png'), pngs[0].png);
-  const ico = buildICO(pngs);
-  fs.writeFileSync(path.join(outDir, 'icon.ico'), ico);
-  console.log('\n✅ Icônes générées :');
-  console.log('   assets/icon.png  (' + pngs[0].png.length + ' octets)');
-  console.log('   assets/icon.ico  (' + ico.length + ' octets)');
 }
+console.log('  icon.png… OK');
+
+console.log('\n✅ Icônes générées :');
+console.log('   assets/icon.png');
+console.log('   assets/icon.ico  (' + ico.length + ' octets)');
