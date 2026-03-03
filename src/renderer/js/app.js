@@ -945,6 +945,14 @@ async function init() {
   // Remove splash overlay after animation completes (3s)
   setTimeout(() => document.getElementById('splash-overlay')?.remove(), 3100);
 
+  // Version dynamique depuis app.getVersion()
+  window.api.getAppVersion().then(v => {
+    const sv = document.getElementById('sidebar-version');
+    const stv = document.getElementById('settings-version');
+    if (sv)  sv.textContent  = `v${v}`;
+    if (stv) stv.textContent = `Version ${v}`;
+  });
+
   // Pre-generate recurring task instances for current year + next year
   const _initNow = new Date();
   window.api.generateRecurringForRange(

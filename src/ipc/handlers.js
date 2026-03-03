@@ -67,6 +67,9 @@ function registerHandlers() {
   ipcMain.handle('sleep:get', () => db.getSleepSchedule());
   ipcMain.handle('sleep:set', (_, data) => { db.setSleepSchedule(data); return { success: true }; });
 
+  // Version
+  ipcMain.handle('app:getVersion', () => app.getVersion());
+
   // Updates
   ipcMain.handle('app:checkForUpdates', () => {
     if (!app.isPackaged) return { status: 'dev' };

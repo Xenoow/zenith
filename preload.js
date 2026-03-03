@@ -56,6 +56,9 @@ contextBridge.exposeInMainWorld('api', {
   getAutoLaunch: ()       => ipcRenderer.invoke('app:getAutoLaunch'),
   setAutoLaunch: (enable) => ipcRenderer.invoke('app:setAutoLaunch', enable),
 
+  // Version
+  getAppVersion: () => ipcRenderer.invoke('app:getVersion'),
+
   // Updates
   checkForUpdates: () => ipcRenderer.invoke('app:checkForUpdates'),
   installUpdate:   () => ipcRenderer.invoke('app:installUpdate'),
