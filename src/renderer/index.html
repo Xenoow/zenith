@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;" />
+  <title>Zenith</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/theme-init.js"></script>
+</head>
+<body>
+
+<!-- Splash screen -->
+<div class="splash-overlay" id="splash-overlay">
+  <div class="splash-content">
+    <img src="../../assets/Zenith.png" alt="Zenith" class="splash-logo" />
+    <div class="splash-name">Zenith</div>
+  </div>
+</div>
+
+
+<!-- Titlebar -->
+<div class="titlebar">
+  <span class="titlebar-title">Zenith</span>
+  <div class="titlebar-timer hidden" id="titlebar-timer">
+    <span class="titlebar-timer-icon">⏱</span>
+    <span id="titlebar-timer-display">00:00</span>
+  </div>
+  <div class="titlebar-controls">
+    <button id="btn-minimize">&#8211;</button>
+    <button id="btn-maximize">&#9633;</button>
+    <button id="btn-close">&#10005;</button>
+  </div>
+</div>
+
+<!-- Layout -->
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- Profile / XP -->
+    <div class="profile-card" id="profile-card" title="Voir le profil" style="cursor:pointer">
+      <div class="profile-top">
+        <div class="profile-avatar" id="profile-avatar">
+          <span id="profile-avatar-letter">U</span>
+          <img id="profile-avatar-img" src="" alt="" style="display:none" />
+          <div class="avatar-edit-overlay" id="avatar-edit-overlay" title="Changer la photo">📷</div>
+        </div>
+        <div class="profile-info">
+          <span class="profile-username" id="profile-username" title="Cliquer pour modifier">Utilisateur</span>
+          <div class="profile-name">Niv. <span id="profile-level">1</span> · <span id="profile-level-title-sb">Débutant 🌱</span></div>
+          <div class="profile-sub"><span id="xp-current">0</span> / <span id="xp-next">100</span> XP</div>
+        </div>
+      </div>
+      <div class="xp-bar-wrap"><div class="xp-bar" id="xp-bar"></div></div>
+      <div class="sb-streak-chip" id="sb-streak-chip">🔥 0 jour</div>
+    </div>
+
+    <!-- Daily summary chips -->
+    <div class="sidebar-stats" id="sidebar-day-summary">
+      <div class="sb-stat-chip" id="sds-tasks">✅ 0 / 0</div>
+      <div class="sb-stat-chip" id="sds-xp">⚡ 0 XP</div>
+    </div>
+
+    <!-- Nav -->
+    <button class="sb-new-task-btn" id="btn-quick-new-task" title="Nouvelle tâche">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      <span class="nav-label">Nouvelle tâche</span>
+    </button>
+    <span class="nav-section-label">Vues</span>
+    <nav>
+      <button class="nav-btn active" data-view="day" title="Journée">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        <span class="nav-label">Journée</span>
+      </button>
+      <button class="nav-btn" data-view="week" title="Semaine">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M3 15h18"/><path d="M7 10v9M12 10v9M17 10v9"/></svg>
+        <span class="nav-label">Semaine</span>
+      </button>
+      <button class="nav-btn" data-view="calendar" title="Calendrier">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+        <span class="nav-label">Calendrier</span>
+      </button>
+      <button class="nav-btn" data-view="all" title="Toutes les tâches">
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+        <span class="nav-label">Toutes les tâches</span>
+      </button>
+      <button class="nav-btn" data-view="recurring" title="Tâches récurrentes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        <span class="nav-label">Récurrentes</span>
+      </button>
+      <button class="nav-btn" data-view="profile" title="Profil">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="nav-label">Profil</span>
+      </button>
+    </nav>
+
+    <!-- Bottom controls -->
+    <div class="sidebar-bottom">
+      <button class="sb-btn" id="btn-settings" title="Paramètres">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span class="nav-label">Paramètres</span>
+      </button>
+      <div class="sidebar-footer-meta">
+        <button class="sb-icon-btn" id="btn-shortcuts" title="Raccourcis clavier (?)">
+          <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h12"/></svg>
+        </button>
+        <span class="sidebar-version">v1.0.0</span>
+        <button class="sb-icon-btn" id="btn-sidebar-toggle" title="Réduire la barre latérale">
+          <svg viewBox="0 0 24 24" id="sidebar-toggle-icon"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- Main -->
+  <main class="main-content">
+
+    <!-- VIEW: Day (schedule) -->
+    <section class="view" id="view-day">
+      <div class="day-header">
+        <div class="day-nav-group">
+          <button class="day-nav-btn" id="prev-day">&#8592;</button>
+          <button class="day-today-btn" id="btn-today">Aujourd'hui</button>
+          <button class="day-nav-btn" id="next-day">&#8594;</button>
+        </div>
+        <div class="day-title-wrap">
+          <div class="day-title-row">
+            <div class="day-title" id="day-title">Journée</div>
+            <span class="live-clock" id="live-clock"></span>
+          </div>
+          <div class="day-subtitle" id="day-subtitle"></div>
+        </div>
+        <div class="day-progress-pill">
+          <div class="day-prog-bar-wrap"><div class="day-prog-bar" id="day-prog-bar"></div></div>
+          <span id="day-prog-label">0 / 0</span>
+        </div>
+        <button class="day-action-btn" id="btn-timer">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M12 5V3M10 3h4"/></svg>
+          Chrono
+        </button>
+        <button class="eod-btn" id="btn-sleep">
+          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Sommeil
+        </button>
+        <button class="notes-toggle-btn" id="btn-notes">
+          <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Notes
+        </button>
+      </div>
+
+      <!-- Body: schedule + notes panel -->
+      <div class="day-body" id="day-body">
+
+        <!-- Left: schedule -->
+        <div class="schedule-container" id="schedule-container">
+          <!-- All-day tasks (without time) -->
+          <div class="schedule-allday" id="schedule-allday" style="display:none">
+            <div class="allday-label">Sans heure</div>
+            <div id="allday-tasks"></div>
+          </div>
+          <!-- Hourly schedule -->
+          <div class="schedule-wrap">
+            <div class="schedule-grid" id="schedule-grid"></div>
+          </div>
+        </div>
+
+        <!-- Right: notes panel -->
+        <div class="notes-panel" id="notes-panel">
+          <div class="notes-resize-handle" id="notes-resize-handle"></div>
+          <div class="notes-header">
+            <div class="notes-header-left">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              <h3>Notes</h3>
+            </div>
+            <button class="icon-btn" id="notes-close" style="width:24px;height:24px;font-size:12px">&#10005;</button>
+          </div>
+          <div class="notes-date-label" id="notes-date-label"></div>
+          <textarea class="notes-textarea" id="notes-textarea" placeholder="Écrire des notes, mémos, idées..."></textarea>
+          <div class="notes-footer">
+            <div class="notes-saved-dot" id="notes-saved-dot"></div>
+            <span id="notes-status">Sauvegardé</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VIEW: Week -->
+    <section class="view hidden" id="view-week">
+      <div class="week-header">
+        <div class="week-nav-group">
+          <button class="day-nav-btn" id="week-prev">&#8592;</button>
+          <button class="day-today-btn" id="week-today">Cette semaine</button>
+          <button class="day-nav-btn" id="week-next">&#8594;</button>
+        </div>
+        <div class="week-range-label" id="week-range-label"></div>
+      </div>
+      <div class="week-grid" id="week-grid"></div>
+    </section>
+
+    <!-- VIEW: Calendar -->
+    <section class="view hidden" id="view-calendar">
+      <div class="cal-padded">
+        <div class="calendar-header">
+          <button class="icon-btn" id="cal-prev">&#8592;</button>
+          <h2 id="cal-month-label"></h2>
+          <button class="icon-btn" id="cal-next">&#8594;</button>
+        </div>
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </div>
+    </section>
+
+    <!-- VIEW: All tasks -->
+    <section class="view hidden" id="view-all">
+      <div class="view-padded">
+        <div class="view-head">
+          <h2>Toutes les tâches</h2>
+          <div class="filters">
+            <select id="filter-priority">
+              <option value="">Toutes priorités</option>
+              <option value="high">Haute</option>
+              <option value="medium">Moyenne</option>
+              <option value="low">Basse</option>
+            </select>
+            <select id="filter-status">
+              <option value="">Tous statuts</option>
+              <option value="0">À faire</option>
+              <option value="1">Complétées</option>
+            </select>
+          </div>
+        </div>
+        <div class="task-list-full" id="task-list-all"></div>
+      </div>
+    </section>
+
+    <!-- VIEW: Recurring tasks -->
+    <section class="view hidden" id="view-recurring">
+      <div class="rec-view-header-section">
+        <div>
+          <h2>Tâches récurrentes</h2>
+          <p class="rec-view-subtitle">Se génèrent automatiquement chaque jour</p>
+        </div>
+        <button class="btn-primary" id="btn-add-recurring-view" style="gap:6px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nouvelle
+        </button>
+      </div>
+      <div class="rec-view-scroll" id="recurrings-list-view"></div>
+    </section>
+
+    <!-- VIEW: Profile -->
+    <section class="view hidden" id="view-profile">
+      <div class="profile-padded">
+        <div class="profile-big-card">
+          <div class="profile-big-avatar" id="pb-badge">
+          <span id="pb-badge-letter">1</span>
+          <img id="pb-badge-img" src="" alt="" style="display:none" />
+          <button class="pb-photo-btn" id="pb-photo-btn" title="Changer la photo">📷</button>
+        </div>
+          <div class="pb-level-group">
+            <h3>Niveau <span id="pb-level">1</span></h3>
+            <span class="pb-level-title" id="pb-level-title">Débutant 🌱</span>
+          </div>
+          <div class="pb-streak-pill" id="pb-streak">🔥 0 jour</div>
+          <div>
+            <div class="pb-xp-bar-wrap"><div class="pb-xp-bar" id="pb-xp-bar"></div></div>
+            <div class="pb-xp-label"><span id="pb-xp-cur">0</span> / <span id="pb-xp-next">100</span> XP</div>
+          </div>
+          <div class="pb-total">Total : <strong><span id="pb-total">0</span> XP</strong></div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><span class="stat-value" id="stat-total">0</span><span class="stat-label">Tâches créées</span></div>
+          <div class="stat-card"><span class="stat-value" id="stat-done">0</span><span class="stat-label">Complétées</span></div>
+          <div class="stat-card"><span class="stat-value" id="stat-days">0</span><span class="stat-label">Jours planifiés</span></div>
+        </div>
+        <div class="section-block">
+          <div class="section-block-title">7 derniers jours</div>
+          <div class="weekly-chart" id="weekly-chart"></div>
+        </div>
+        <div class="section-block">
+          <div class="section-block-title">Badges</div>
+          <div class="badges-grid" id="badges-grid"></div>
+        </div>
+        <div class="section-block">
+          <div class="section-block-title">Tâches récurrentes</div>
+          <div class="recurrings-list" id="recurrings-list"></div>
+          <button class="btn-add-recurring" id="btn-add-recurring">+ Nouvelle tâche récurrente</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Edit Task Modal -->
+<div class="modal-backdrop hidden" id="modal-backdrop">
+  <div class="modal modal-edit">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-icon">✏️</div>
+        <h3 id="modal-title">Modifier la tâche</h3>
+      </div>
+      <button class="icon-btn" id="modal-close">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="task-id" />
+
+      <div class="form-group">
+        <label class="form-label">Titre</label>
+        <input type="text" id="task-title" class="form-input" placeholder="Nom de la tâche..." autocomplete="off" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea id="task-desc" class="form-input" placeholder="Détails optionnels..." rows="2"></textarea>
+      </div>
+
+      <div class="modal-row-2">
+        <div class="form-group">
+          <label class="form-label">Priorité</label>
+          <div class="priority-group">
+            <button class="prio-opt" data-p="high">🔴 Haute</button>
+            <button class="prio-opt sel" data-p="medium">🟡 Moyenne</button>
+            <button class="prio-opt" data-p="low">🟢 Basse</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Couleur</label>
+          <div class="modal-color-row">
+            <button class="modal-color-swatch sel" data-color="" title="Aucune">–</button>
+            <button class="modal-color-swatch" data-color="c1" title="Rouge"></button>
+            <button class="modal-color-swatch" data-color="c2" title="Vert"></button>
+            <button class="modal-color-swatch" data-color="c3" title="Bleu"></button>
+            <button class="modal-color-swatch" data-color="c4" title="Violet"></button>
+            <button class="modal-color-swatch" data-color="c5" title="Orange"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Horaires</label>
+        <div class="modal-time-row">
+          <input type="date" id="task-date" class="form-input" />
+          <span class="modal-time-sep">·</span>
+          <input type="time" id="task-time" class="form-input" />
+          <span class="modal-time-sep">→</span>
+          <input type="time" id="task-time-end" class="form-input" />
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" id="modal-cancel">Annuler</button>
+      <button class="btn-primary modal-save-btn" id="modal-save">✓ Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Fin de journée Modal -->
+<!-- Sleep Schedule Modal -->
+<div class="sleep-backdrop hidden" id="sleep-backdrop">
+  <div class="sleep-card">
+    <div class="sleep-header">
+      <div class="sleep-header-left">
+        <span class="sleep-moon">🌙</span>
+        <h3>Horaires de sommeil</h3>
+      </div>
+      <button class="icon-btn" id="sleep-close">&#10005;</button>
+    </div>
+    <div class="sleep-body">
+
+      <div class="sleep-times">
+        <div class="sleep-time-block">
+          <div class="sleep-time-icon">☀️</div>
+          <div class="sleep-time-label">Réveil</div>
+          <input type="time" class="sleep-time-input" id="sleep-wake" value="07:00" />
+        </div>
+        <div class="sleep-time-arrow">→</div>
+        <div class="sleep-time-block">
+          <div class="sleep-time-icon">🌙</div>
+          <div class="sleep-time-label">Coucher</div>
+          <input type="time" class="sleep-time-input" id="sleep-bed" value="23:00" />
+        </div>
+      </div>
+
+      <div class="sleep-duration-display">
+        <span id="sleep-duration-label">Durée de sommeil : —</span>
+      </div>
+
+      <div class="sleep-separator"></div>
+
+      <div class="sleep-option-row">
+        <div class="sleep-option-left">
+          <div class="sleep-option-icon">📵</div>
+          <div>
+            <div class="sleep-option-title">Déconnexion écrans</div>
+            <div class="sleep-option-desc">Crée une tâche récurrente "Fin des écrans" 1h avant le coucher, tous les jours</div>
+          </div>
+        </div>
+        <button class="toggle-pill" id="sleep-screen-toggle"></button>
+      </div>
+
+    </div>
+    <div class="sleep-footer">
+      <button class="btn-secondary" id="sleep-cancel">Annuler</button>
+      <button class="btn-primary sleep-save-btn" id="sleep-save">✓ Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Timer Overlay -->
+<div class="timer-backdrop hidden" id="timer-backdrop">
+  <div class="timer-card">
+    <div class="timer-top">
+      <h3>Chronomètre</h3>
+      <button class="icon-btn" id="timer-close">&#10005;</button>
+    </div>
+    <div class="timer-modes">
+      <button class="timer-mode-btn active" data-mode="pomodoro">Pomodoro</button>
+      <button class="timer-mode-btn" data-mode="custom">Personnalisé</button>
+      <button class="timer-mode-btn" data-mode="stopwatch">Chrono</button>
+    </div>
+    <div class="timer-custom-config hidden" id="timer-custom-config">
+      <div class="tcc-row">
+        <div class="tcc-field">
+          <label for="tcc-work">Travail</label>
+          <div class="tcc-input-wrap"><input type="number" id="tcc-work" min="1" max="180" value="25" /><span>min</span></div>
+        </div>
+        <div class="tcc-divider"></div>
+        <div class="tcc-field">
+          <label for="tcc-break">Pause</label>
+          <div class="tcc-input-wrap"><input type="number" id="tcc-break" min="1" max="60" value="5" /><span>min</span></div>
+        </div>
+        <div class="tcc-divider"></div>
+        <div class="tcc-field">
+          <label for="tcc-sessions">Sessions</label>
+          <div class="tcc-input-wrap"><input type="number" id="tcc-sessions" min="1" max="12" value="4" /></div>
+        </div>
+      </div>
+    </div>
+    <div class="timer-circle-wrap">
+      <svg class="timer-svg" viewBox="0 0 160 160">
+        <circle class="timer-track"    cx="80" cy="80" r="68" />
+        <circle class="timer-progress" cx="80" cy="80" r="68" id="timer-ring" />
+      </svg>
+      <div class="timer-inner">
+        <div class="timer-display" id="timer-display">25:00</div>
+        <div class="timer-phase"   id="timer-phase">Travail</div>
+      </div>
+    </div>
+    <div class="timer-controls">
+      <button class="timer-ctrl-btn" id="timer-reset" title="Réinitialiser">&#8635;</button>
+      <button class="timer-ctrl-btn btn-play" id="timer-play">&#9654;</button>
+      <button class="timer-ctrl-btn" id="timer-skip" title="Passer">&#9193;</button>
+    </div>
+    <div class="timer-sessions" id="timer-sessions">Session 1 sur 4</div>
+  </div>
+</div>
+
+<!-- XP Popup -->
+<div class="xp-popup hidden" id="xp-popup"></div>
+
+<!-- Overdue briefing toast -->
+<div class="overdue-toast hidden" id="overdue-toast">
+  <div class="ot-header">
+    <span class="ot-icon">⏰</span>
+    <span class="ot-title">Tâches en retard</span>
+    <button class="ot-close" id="ot-close">✕</button>
+  </div>
+  <ul class="ot-list" id="ot-list"></ul>
+  <div class="ot-footer">
+    <button class="btn-secondary ot-dismiss" id="ot-dismiss">Ignorer</button>
+    <button class="btn-primary ot-reschedule-all" id="ot-reschedule-all">Reporter à demain</button>
+  </div>
+</div>
+
+<!-- Generic toast container -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Settings Modal -->
+<div class="settings-backdrop hidden" id="settings-backdrop">
+  <div class="settings-panel">
+    <div class="settings-header">
+      <h3>Paramètres</h3>
+      <button class="icon-btn" id="settings-close">&#10005;</button>
+    </div>
+    <div class="settings-body">
+
+      <!-- Tab bar -->
+      <div class="settings-tabs">
+        <button class="settings-tab active" data-tab="general">Général</button>
+        <button class="settings-tab" data-tab="display">Affichage</button>
+      </div>
+
+      <!-- Tab: Général -->
+      <div class="settings-tab-content" id="settings-tab-general">
+
+        <div class="settings-section">
+          <div class="settings-section-title">Système</div>
+          <div class="settings-row">
+            <div class="settings-row-left">
+              <div class="settings-row-icon">
+                <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              </div>
+              <div>
+                <div class="settings-row-label">Notifications</div>
+                <div class="settings-row-desc">Alertes avant et à l'heure des tâches</div>
+              </div>
+            </div>
+            <button class="toggle-pill" id="settings-notif-toggle"></button>
+          </div>
+          <div class="settings-row">
+            <div class="settings-row-left">
+              <div class="settings-row-icon">
+                <svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg>
+              </div>
+              <div>
+                <div class="settings-row-label">Lancement au démarrage</div>
+                <div class="settings-row-desc">Ouvrir Zenith automatiquement au démarrage de Windows</div>
+              </div>
+            </div>
+            <button class="toggle-pill" id="settings-autolaunch-toggle"></button>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-section-title">Mises à jour</div>
+          <div class="settings-row">
+            <div class="settings-row-left">
+              <div class="settings-row-icon">
+                <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              </div>
+              <div>
+                <div class="settings-row-label">Vérifier les mises à jour</div>
+                <div class="settings-row-desc" id="update-status-desc">Dernière version installée</div>
+              </div>
+            </div>
+            <button class="settings-action-btn" id="btn-check-update">Vérifier</button>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-section-title">Informations</div>
+          <div class="settings-row settings-row--info">
+            <div class="settings-row-left">
+              <div class="settings-row-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              </div>
+              <div>
+                <div class="settings-row-label">Zenith</div>
+                <div class="settings-row-desc">Version 1.0.0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Tab: Affichage -->
+      <div class="settings-tab-content hidden" id="settings-tab-display">
+
+        <div class="settings-section">
+          <div class="settings-section-title">Thème</div>
+          <div class="theme-picker">
+            <button class="theme-opt active" data-theme-val="light">
+              <span class="theme-opt-preview theme-opt-light"></span>
+              <span>Clair</span>
+            </button>
+            <button class="theme-opt" data-theme-val="dark">
+              <span class="theme-opt-preview theme-opt-dark"></span>
+              <span>Sombre</span>
+            </button>
+            <button class="theme-opt" data-theme-val="bw">
+              <span class="theme-opt-preview theme-opt-bw"></span>
+              <span>Noir & Blanc</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Shortcuts Modal -->
+<div class="shortcuts-backdrop hidden" id="shortcuts-backdrop">
+  <div class="shortcuts-panel">
+    <div class="shortcuts-header">
+      <h3>Raccourcis clavier</h3>
+      <button class="icon-btn" id="shortcuts-close">&#10005;</button>
+    </div>
+    <div class="shortcuts-body">
+      <div class="shortcuts-section">
+        <div class="shortcuts-section-title">Navigation</div>
+        <div class="shortcut-row"><kbd>D</kbd><span>Vue Journée</span></div>
+        <div class="shortcut-row"><kbd>W</kbd><span>Vue Semaine</span></div>
+        <div class="shortcut-row"><kbd>C</kbd><span>Vue Calendrier</span></div>
+        <div class="shortcut-row"><kbd>←</kbd><kbd>→</kbd><span>Jour précédent / suivant</span></div>
+      </div>
+      <div class="shortcuts-section">
+        <div class="shortcuts-section-title">Actions</div>
+        <div class="shortcut-row"><kbd>N</kbd><span>Nouvelle tâche à l'heure actuelle</span></div>
+        <div class="shortcut-row"><kbd>T</kbd><span>Ouvrir / fermer le chrono</span></div>
+        <div class="shortcut-row"><kbd>Ctrl</kbd><kbd>Z</kbd><span>Annuler la dernière action</span></div>
+        <div class="shortcut-row"><kbd>Esc</kbd><span>Fermer les fenêtres ouvertes</span></div>
+      </div>
+      <div class="shortcuts-section">
+        <div class="shortcuts-section-title">Interface</div>
+        <div class="shortcut-row"><kbd>?</kbd><span>Afficher ce panneau</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recurring task creation modal -->
+<div class="modal-backdrop hidden" id="recurring-modal-backdrop">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Tâche récurrente</h3>
+      <button class="icon-btn" id="recurring-modal-close">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Titre</label>
+        <input type="text" id="rec-title" placeholder="Nom de la tâche..." autocomplete="off" />
+      </div>
+      <div class="form-group">
+        <label>Priorité</label>
+        <div class="priority-group">
+          <button class="prio-opt" data-rp="high">🔴 Haute</button>
+          <button class="prio-opt sel" data-rp="medium">🟡 Moyenne</button>
+          <button class="prio-opt" data-rp="low">🟢 Basse</button>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Début</label>
+          <input type="time" id="rec-time" />
+        </div>
+        <div class="form-group">
+          <label>Fin</label>
+          <input type="time" id="rec-time-end" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Fréquence</label>
+        <div class="priority-group">
+          <button class="prio-opt sel" data-rf="daily">Quotidien</button>
+          <button class="prio-opt" data-rf="weekly">Hebdo</button>
+          <button class="prio-opt" data-rf="monthly">Mensuel</button>
+        </div>
+      </div>
+      <div class="form-group hidden" id="rec-weekly-group">
+        <label>Jour de la semaine</label>
+        <select id="rec-day-of-week" class="recurrence-select">
+          <option value="1">Lundi</option>
+          <option value="2">Mardi</option>
+          <option value="3">Mercredi</option>
+          <option value="4">Jeudi</option>
+          <option value="5">Vendredi</option>
+          <option value="6">Samedi</option>
+          <option value="0">Dimanche</option>
+        </select>
+      </div>
+      <div class="form-group hidden" id="rec-monthly-group">
+        <label>Jour du mois</label>
+        <input type="number" id="rec-day-of-month" min="1" max="31" value="1" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" id="recurring-modal-cancel">Annuler</button>
+      <button class="btn-primary" id="recurring-modal-save">Créer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Update banner -->
+<div class="update-banner hidden" id="update-banner">
+  <span class="update-banner-icon">⬆</span>
+  <span class="update-banner-text" id="update-banner-text">Mise à jour disponible…</span>
+  <button class="update-banner-btn" id="update-banner-btn">Installer et redémarrer</button>
+  <button class="update-banner-close" id="update-banner-close">✕</button>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/gamification.js"></script>
+<script src="js/tasks.js"></script>
+<script src="js/week.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/timer.js"></script>
+<script src="js/notes.js"></script>
+</body>
+</html>

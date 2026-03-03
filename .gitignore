@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+out/
+
+# Electron-builder cache
+.webpack/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local env / secrets
+.env
+.env.local
+
+# Claude project files
+.claude/
+
+# Misc
+nul
