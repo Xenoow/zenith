@@ -1,7 +1,7 @@
 {
   "name": "zenith",
   "productName": "Zenith",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Zenith — Planifiez vos journées, gagnez de l'XP.",
   "main": "main.js",
   "scripts": {
